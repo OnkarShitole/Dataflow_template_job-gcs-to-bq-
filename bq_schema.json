@@ -1,0 +1,21 @@
+{
+    "BigQuery Schema": [{
+      "name": "sale_id",
+      "type": "INTEGER"
+     },
+     {
+      "name": "sale_date",
+      "type": "DATE"
+     },
+     {
+      "name": "amount",
+      "type": "INTEGER"
+     },
+     {
+      "name": "customer_id",
+      "type": "INTEGER"
+     }
+    ]
+   }
+   
+   			
