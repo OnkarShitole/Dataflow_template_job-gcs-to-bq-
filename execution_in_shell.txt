@@ -1,0 +1,40 @@
+ ===========================================
+    
+        **Python cannot directly run a file from GCS**
+
+Python only runs **local files**, not files on `gs://`. You have two options:
+
+---
+
+### **Option 1: Copy the file locally in Cloud Shell, then run**
+
+```bash
+# Copy from GCS to Cloud Shell home directory
+gsutil cp gs://my-bucket-88/beampipeline.py ~/beampipeline.py
+
+# Run it locally
+python3 ~/beampipeline.py
+```
+
+---
+
+### **Option 2: Use Dataflow flex template / staging (recommended for production)**
+
+* You **don’t run the script directly from GCS**. Instead:
+
+  1. Stage your code in GCS (temp\_location)
+  2. Submit the pipeline to Dataflow using `DataflowRunner`
+  3. Dataflow workers fetch your code from GCS automatically.
+
+Your pipeline code should have something like:
+
+```python
+gcp_options.temp_location = 'gs://my-bucket-88/temp'
+options.view_as(StandardOptions).runner = 'DataflowRunner'
+```
+
+Then you can run locally:
+
+```bash
+python3 beampipeline.py
+```
